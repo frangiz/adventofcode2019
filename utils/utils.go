@@ -21,3 +21,19 @@ func ReadInputAsInt(path string) []int {
 	}
 	return ints
 }
+
+// ReadInputLineSplitOn stuff
+func ReadInputLineSplitOn(path, seperator string) []string {
+	bytes, _ := ioutil.ReadFile(path)
+	return strings.Split(string(bytes), seperator)
+}
+
+// ReadInputIntsLineSplitOn stuff
+func ReadInputIntsLineSplitOn(path, seperator string) []int {
+	ints := []int{}
+	for _, line := range ReadInputLineSplitOn(path, seperator) {
+		invVal, _ := strconv.Atoi(line)
+		ints = append(ints, invVal)
+	}
+	return ints
+}
