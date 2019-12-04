@@ -6,3 +6,4 @@ Time to test Go for Advent Of Code. Will only do a few selected days this time i
 Format code -> `gofmt -w .`
 
 Run tests -> `go test` inside the day
+Run all tests -> `go test ./... -count=1` inside this folder

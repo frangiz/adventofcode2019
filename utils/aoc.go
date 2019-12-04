@@ -1,4 +1,4 @@
-package utils
+package aoc
 
 import (
 	"io/ioutil"
@@ -52,4 +52,19 @@ func Abs(a int) int {
 		return -a
 	}
 	return a
+}
+
+// Point stuff
+type Point struct {
+	X, Y int
+}
+
+// ManhattanDist stuff
+func ManhattanDist(p1, p2 Point) int {
+	return Abs(p1.X-p2.X) + Abs(p2.Y-p2.Y)
+}
+
+// ManhattanDistSingle stuff
+func ManhattanDistSingle(p Point) int {
+	return Abs(p.X) + Abs(p.Y)
 }

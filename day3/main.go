@@ -6,58 +6,36 @@ import (
 	"strings"
 )
 
-type point struct {
-	x, y int
-}
-
 type wireStep struct {
 	wireID, steps int
 }
 
+var dirs = map[string]aoc.Point{
+	"R": aoc.Point{X: 1, Y: 0},
+	"L": aoc.Point{X: -1, Y: 0},
+	"U": aoc.Point{X: 0, Y: -1},
+	"D": aoc.Point{X: 0, Y: 1},
+}
+
 type frontPanel struct {
-	visited map[point][]wireStep
+	visited map[aoc.Point][]wireStep
 }
 
 func makeFrontPanel() frontPanel {
-	return frontPanel{make(map[point][]wireStep)}
+	return frontPanel{make(map[aoc.Point][]wireStep)}
 }
 
 func (fp frontPanel) outlineWire(wireID int, wire string) {
-	pos := point{0, 0}
+	pos := aoc.Point{X: 0, Y: 0}
 	fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, 0})
 	totalSteps := 0
-	for _, dir := range strings.Split(wire, ",") {
-		if strings.HasPrefix(dir, "R") {
-			steps, _ := strconv.Atoi(dir[1:])
-			for i := 1; i <= steps; i++ {
-				totalSteps++
-				pos = point{pos.x + 1, pos.y}
-				fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, totalSteps})
-			}
-		}
-		if strings.HasPrefix(dir, "U") {
-			steps, _ := strconv.Atoi(dir[1:])
-			for i := 1; i <= steps; i++ {
-				totalSteps++
-				pos = point{pos.x, pos.y - 1}
-				fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, totalSteps})
-			}
-		}
-		if strings.HasPrefix(dir, "L") {
-			steps, _ := strconv.Atoi(dir[1:])
-			for i := 1; i <= steps; i++ {
-				totalSteps++
-				pos = point{pos.x - 1, pos.y}
-				fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, totalSteps})
-			}
-		}
-		if strings.HasPrefix(dir, "D") {
-			steps, _ := strconv.Atoi(dir[1:])
-			for i := 1; i <= steps; i++ {
-				totalSteps++
-				pos = point{pos.x, pos.y + 1}
-				fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, totalSteps})
-			}
+	for _, path := range strings.Split(wire, ",") {
+		dir := dirs[path[:1]]
+		steps, _ := strconv.Atoi(path[1:])
+		for i := 1; i <= steps; i++ {
+			totalSteps++
+			pos = aoc.Point{X: pos.X + dir.X, Y: pos.Y + dir.Y}
+			fp.visited[pos] = append(fp.visited[pos], wireStep{wireID, totalSteps})
 		}
 	}
 }
@@ -65,13 +43,13 @@ func (fp frontPanel) outlineWire(wireID int, wire string) {
 func (fp frontPanel) smallestDistance() int {
 	shortestDist := 9999999
 	for k, v := range fp.visited {
-		if (len(v) > 1 && k != point{0, 0}) {
+		if (len(v) > 1 && k != aoc.Point{X: 0, Y: 0}) {
 			wireIds := make(map[int]bool)
 			for _, entry := range v {
 				wireIds[entry.wireID] = true
 			}
 			if len(wireIds) > 1 {
-				shortestDist = utils.Min(shortestDist, utils.Abs(k.x)+utils.Abs(k.y))
+				shortestDist = aoc.Min(shortestDist, aoc.ManhattanDistSingle(k))
 			}
 		}
 	}
@@ -81,7 +59,7 @@ func (fp frontPanel) smallestDistance() int {
 func (fp frontPanel) fewestCombinedSteps() int {
 	combinedSteps := 9999999
 	for k, v := range fp.visited {
-		if (len(v) > 1 && k != point{0, 0}) {
+		if (len(v) > 1 && k != aoc.Point{X: 0, Y: 0}) {
 			wireIds := make(map[int]int)
 			for _, entry := range v {
 				if _, ok := wireIds[entry.wireID]; !ok {
@@ -93,7 +71,7 @@ func (fp frontPanel) fewestCombinedSteps() int {
 				for _, v2 := range wireIds {
 					steps += v2
 				}
-				combinedSteps = utils.Min(combinedSteps, steps)
+				combinedSteps = aoc.Min(combinedSteps, steps)
 			}
 		}
 	}
@@ -101,7 +79,7 @@ func (fp frontPanel) fewestCombinedSteps() int {
 }
 
 func partA() int {
-	input := utils.ReadInputAsStr("input.txt")
+	input := aoc.ReadInputAsStr("input.txt")
 	fp := makeFrontPanel()
 	for id, wire := range input {
 		fp.outlineWire(id, wire)
@@ -110,7 +88,7 @@ func partA() int {
 }
 
 func partB() int {
-	input := utils.ReadInputAsStr("input.txt")
+	input := aoc.ReadInputAsStr("input.txt")
 	fp := makeFrontPanel()
 	for id, wire := range input {
 		fp.outlineWire(id, wire)

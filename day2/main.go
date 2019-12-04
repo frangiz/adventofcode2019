@@ -23,14 +23,14 @@ func runIntCode(input []int) []int {
 }
 
 func partA() int {
-	input := utils.ReadInputIntsLineSplitOn("input.txt", ",")
+	input := aoc.ReadInputIntsLineSplitOn("input.txt", ",")
 	input[1] = 12
 	input[2] = 2
 	return runIntCode(input)[0]
 }
 
 func partB() int {
-	input := utils.ReadInputIntsLineSplitOn("input.txt", ",")
+	input := aoc.ReadInputIntsLineSplitOn("input.txt", ",")
 	for noun := 0; noun <= 99; noun++ {
 		for verb := 0; verb <= 99; verb++ {
 			tmp := make([]int, len(input))
