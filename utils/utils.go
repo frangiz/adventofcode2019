@@ -37,3 +37,19 @@ func ReadInputIntsLineSplitOn(path, seperator string) []int {
 	}
 	return ints
 }
+
+// Min stuff
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+// Abs stuff
+func Abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
