@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/frangiz/adventofcode2019/utils"
+	"github.com/frangiz/adventofcode2019/pkg/aoc"
 )
 
 func runIntCode(input []int) []int {
