@@ -6,15 +6,21 @@ import (
 )
 
 // ReadInputAsStr stuff
-func ReadInputAsStr(path string) []string {
+func ReadInputAsStr(path string) string {
+	bytes, _ := ioutil.ReadFile(path)
+	return string(bytes)
+}
+
+// ReadInputAsStrArray stuff
+func ReadInputAsStrArray(path string) []string {
 	bytes, _ := ioutil.ReadFile(path)
 	return strings.Split(string(bytes), "\r\n")
 }
 
-// ReadInputAsInt stuff
-func ReadInputAsInt(path string) []int {
+// ReadInputAsIntArray stuff
+func ReadInputAsIntArray(path string) []int {
 	ints := []int{}
-	for _, line := range ReadInputAsStr(path) {
+	for _, line := range ReadInputAsStrArray(path) {
 		ints = append(ints, Atoi(line))
 	}
 	return ints

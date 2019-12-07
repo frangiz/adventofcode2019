@@ -77,7 +77,7 @@ func (fp frontPanel) fewestCombinedSteps() int {
 }
 
 func partA() int {
-	input := aoc.ReadInputAsStr("input.txt")
+	input := aoc.ReadInputAsStrArray("input.txt")
 	fp := makeFrontPanel()
 	for id, wire := range input {
 		fp.outlineWire(id, wire)
@@ -86,7 +86,7 @@ func partA() int {
 }
 
 func partB() int {
-	input := aoc.ReadInputAsStr("input.txt")
+	input := aoc.ReadInputAsStrArray("input.txt")
 	fp := makeFrontPanel()
 	for id, wire := range input {
 		fp.outlineWire(id, wire)

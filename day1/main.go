@@ -17,7 +17,7 @@ func calcFuelPartB(mass int) int {
 }
 
 func partA() int {
-	input := aoc.ReadInputAsInt("input.txt")
+	input := aoc.ReadInputAsIntArray("input.txt")
 	sum := 0
 	for _, mass := range input {
 		sum += calcFuel(mass)
@@ -26,7 +26,7 @@ func partA() int {
 }
 
 func partB() int {
-	input := aoc.ReadInputAsInt("input.txt")
+	input := aoc.ReadInputAsIntArray("input.txt")
 	sum := 0
 	for _, mass := range input {
 		sum += calcFuelPartB(mass)
